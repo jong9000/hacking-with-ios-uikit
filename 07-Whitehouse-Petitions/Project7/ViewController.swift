@@ -8,9 +8,8 @@ class ViewController: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    self.navigationItem.setLeftBarButton(UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(leftBarButtonTapped)), animated: true)
-    
-    self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(rightBarButtonTapped)), animated: true)
+    navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Credits", style: .plain, target: self, action: #selector(leftBarButtonTapped))
+    navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(rightBarButtonTapped)), animated: true)
     
     let urlString: String
     
@@ -30,7 +29,7 @@ class ViewController: UITableViewController {
   }
   
   @objc func leftBarButtonTapped() {
-    let ac = UIAlertController(title: "Credits", message: "made with Aloha by jong9000", preferredStyle: .alert)
+    let ac = UIAlertController(title: "Credits", message: "Made with Aloha by jong9000", preferredStyle: .alert)
     ac.addAction(UIAlertAction(title: "OK", style: .default))
     present(ac, animated: true)
   }
@@ -40,7 +39,10 @@ class ViewController: UITableViewController {
     ac.addTextField { textField in
       textField.placeholder = "Search"
     }
+    
+    ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
     ac.addAction(UIAlertAction(title: "Go", style: .default))
+    
     present(ac,animated: true)
   }
 
