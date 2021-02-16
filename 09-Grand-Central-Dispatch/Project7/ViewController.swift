@@ -11,21 +11,31 @@ class ViewController: UITableViewController {
     navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Credits", style: .plain, target: self, action: #selector(leftBarButtonTapped))
     navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(rightBarButtonTapped)), animated: true)
     
-    let urlString: String
+    performSelector(inBackground: #selector(fetchJSON), with: nil)
+  }
+  
+  @objc func fetchJSON() {
     
-    if navigationController?.tabBarItem.tag == 0 {
-      urlString = "https://www.hackingwithswift.com/samples/petitions-1.json"
-    } else {
-      urlString = "https://www.hackingwithswift.com/samples/petitions-2.json"
-    }
+    var urlString = ""
     
-    if let url = URL(string: urlString) {
-      if let data = try? Data(contentsOf: url) {
-        parse(json: data)
-        return 
+    DispatchQueue.main.async { [weak self] in
+      if self?.navigationController?.tabBarItem.tag == 0 {
+        urlString = "https://www.hackingwithswift.com/samples/petitions-1.json"
+      } else {
+        urlString = "https://www.hackingwithswift.com/samples/petitions-2.json"
+      }
+      
+      if let url = URL(string: urlString) {
+        if let data = try? Data(contentsOf: url) {
+          self?.parse(json: data)
+          return
+        }
+        DispatchQueue.main.async { [weak self] in
+          self?.showError()
+        }
       }
     }
-      showError()
+
   }
   
   @objc func leftBarButtonTapped() {
@@ -46,10 +56,10 @@ class ViewController: UITableViewController {
     present(ac,animated: true)
   }
 
-  func showError() {
-    let ac = UIAlertController(title: "Loading error", message: "There was a problem loading the feed; please check your connection and try again.", preferredStyle: .alert)
-    ac.addAction(UIAlertAction(title: "OK", style: .default))
-    present(ac, animated: true)
+  @objc func showError() {
+      let ac = UIAlertController(title: "Loading error", message: "There was a problem loading the feed; please check your connection and try again.", preferredStyle: .alert)
+      ac.addAction(UIAlertAction(title: "OK", style: .default))
+      present(ac, animated: true)
   }
   
   func parse(json: Data) {
@@ -57,7 +67,9 @@ class ViewController: UITableViewController {
     
     if let jsonPetitions = try? decoder.decode(Petitions.self, from: json) {
       petitions = jsonPetitions.results
-      tableView.reloadData()
+      tableView.performSelector(onMainThread: #selector(UITableView.reloadData), with: nil, waitUntilDone: false)
+    } else {
+      performSelector(onMainThread: #selector(showError), with: nil, waitUntilDone: false)
     }
   }
   
