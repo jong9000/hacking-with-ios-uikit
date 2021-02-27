@@ -9,10 +9,10 @@
     <a href="https://github.com/jong9000/hacking-with-ios-uikit/tree/main/02-Guess-the-Flag">Guess the Flag</a>
   </li>
   <li>
-    <a hreef="https://github.com/jong9000/hacking-with-ios-uikit/tree/main/03-Social-Media">Social Media</a>
+    <a href="https://github.com/jong9000/hacking-with-ios-uikit/tree/main/03-Social-Media">Social Media</a>
   </li>
   <li>
-    <a href="https://github.com/jong9000/hacking-with-ios-uikit/tree/main/04-Easy-Browser"><a>Easy Browser</a>
+    <a href="https://github.com/jong9000/hacking-with-ios-uikit/tree/main/04-Easy-Browser">Easy Browser</a>
   </li>
   <li>
     <a href="https://github.com/jong9000/hacking-with-ios-uikit/tree/main/05-Word-Scramble">Word Scramble</a>
